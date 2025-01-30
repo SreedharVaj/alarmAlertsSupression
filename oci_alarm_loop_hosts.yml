@@ -15,6 +15,17 @@
     end_time: "{{ end_time }}"
 
   tasks:
+
+    - name: Debug target variable
+      ansible.builtin.debug:
+        var: target
+
+    - name: Debug available groups
+      ansible.builtin.debug:
+        var: groups
+
+
+
     - name: host inventory group loop
       ansible.builtin.debug:
         msg: hostname "{{ hostvars[item].display_name }}"
