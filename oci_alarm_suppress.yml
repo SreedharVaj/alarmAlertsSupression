@@ -1,0 +1,37 @@
+# file : oci_alarm_suppress.yml
+# description : Automates the backing up of boot volume of the host
+#
+#
+# ——Date—————|——————— Author————————————|————Company—————|————Version Number————|————Change——————————————————————————————
+# 08-May-2024      Sridhar Doki         Centroid             1.0                0. Initial Version
+#
+#
+#
+#——————————————————————————————————————————————————————————————————————————————————————————————————————————————————
+# This script gets the alarm details and matches with the host or ocid and will suppress them
+- name: Get Alarm Details based on the host display name or OCID
+  block:
+    #==========================================================================================
+    - name: List alarms for each compartment based on the host compartment
+      oci_monitoring_alarm_facts:
+        compartment_id: "{{ instance_compartment }}"
+        lifecycle_state: ACTIVE
+      register: result
+
+    - set_fact:
+        alarm_results: "{{ result.alarms }}"
+
+    - debug:
+        msg: instance name "{{ instance_name }}"
+
+    - name: Extract Alarm IDs
+      set_fact:
+        alarm_ids: "{{ alarm_ids + [result_item.id] }}"
+      loop: "{{ alarm_results }}"
+      when: alarm_results | length > 0 and (("resourceDisplayName = \"" + instance_name + "\"") in result_item.query or instance_id in result_item.query)
+      loop_control:
+        loop_var: result_item
+        
+  rescue:
+    - fail:
+        msg: "{{ ansible_failed_task }} {{ ansible_failed_result }}"

@@ -1,0 +1,5 @@
+---
+collections:
+  - name: ansible.posix
+  - name: oracle.oci
+  - name: community.general

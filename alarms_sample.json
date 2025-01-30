@@ -1,0 +1,203 @@
+[{
+  "compartment_id": "ocid1.compartment.oc1..aaaaaaaaandoxj5l4pipdkaqdaj7i2pjaqnfr5tpnkeqyxvc422oqh6ausna",
+  "defined_tags": {
+    "Oracle-Tags": {
+      "CreatedBy": "oracleidentitycloudservice/sridhar.doki@centroid.com",
+      "CreatedOn": "2024-04-30T10:37:35.766Z"
+    },
+    "costTracking": {
+      "costcenter": "centroid_offshore"
+    }
+  },
+  "destinations": [
+    "ocid1.onstopic.oc1.iad.amaaaaaa6rfcedyaadaueqxlci4hzcsqrs7gvxvcgccdypumom7sjlof2joa"
+  ],
+  "display_name": "olam server memory utilization greater than 90%",
+  "freeform_tags": {
+    "CTX_NOTIFICATIONS_COMPUTE_ID": "ocid1.instance.oc1.iad.anuwcljt6rfcedyccsebaern4qc2whnrpk6whjboeb2uwyyiyfhha6sdsy2q"
+  },
+  "id": "ocid1.alarm.oc1.iad.aaaaaaaatl6yipilcr3raqzmzx7lwr6ihngiaxqemeywrayoj3vexrip4ula",
+  "is_enabled": true,
+  "lifecycle_state": "ACTIVE",
+  "metric_compartment_id": "ocid1.compartment.oc1..aaaaaaaaandoxj5l4pipdkaqdaj7i2pjaqnfr5tpnkeqyxvc422oqh6ausna",
+  "namespace": "oci_computeagent",
+  "query": "MemoryUtilization[5m]{resourceId = \"ocid1.instance.oc1.iad.anuwcljt6rfcedyccsebaern4qc2whnrpk6whjboeb2uwyyiyfhha6sdsy2q\"}.Mean() > 90",
+  "severity": "WARNING",
+  "suppression": {
+    "description": "Planned outage",
+    "time_suppress_from": "2024-05-06T11:05:00+00:00",
+    "time_suppress_until": "2024-05-06T11:15:00+00:00"
+  }
+}, {
+  "compartment_id": "ocid1.compartment.oc1..aaaaaaaaandoxj5l4pipdkaqdaj7i2pjaqnfr5tpnkeqyxvc422oqh6ausna",
+  "defined_tags": {
+    "Oracle-Tags": {
+      "CreatedBy": "oracleidentitycloudservice/sridhar.doki@centroid.com",
+      "CreatedOn": "2024-04-30T07:40:27.273Z"
+    },
+    "costTracking": {
+      "costcenter": "centroid_offshore"
+    }
+  },
+  "destinations": [
+    "ocid1.onstopic.oc1.iad.amaaaaaa6rfcedyaadaueqxlci4hzcsqrs7gvxvcgccdypumom7sjlof2joa"
+  ],
+  "display_name": "olam server memory utilization alarm",
+  "freeform_tags": {},
+  "id": "ocid1.alarm.oc1.iad.aaaaaaaaih7vko7hxpvdwz457ugsbtoqefnwec73574rzaq5nifyksuviqra",
+  "is_enabled": true,
+  "lifecycle_state": "ACTIVE",
+  "metric_compartment_id": "ocid1.compartment.oc1..aaaaaaaaandoxj5l4pipdkaqdaj7i2pjaqnfr5tpnkeqyxvc422oqh6ausna",
+  "namespace": "oci_computeagent",
+  "query": "MemoryUtilization[1m]{resourceId = \"ocid1.instance.oc1.iad.anuwcljt6rfcedyccsebaern4qc2whnrpk6whjboeb2uwyyiyfhha6sdsy2q\"}.mean() > 90",
+  "severity": "CRITICAL",
+  "suppression": {
+    "description": "Planned outage",
+    "time_suppress_from": "2024-05-06T11:05:00+00:00",
+    "time_suppress_until": "2024-05-06T11:15:00+00:00"
+  }
+}, {
+  "compartment_id": "ocid1.compartment.oc1..aaaaaaaaandoxj5l4pipdkaqdaj7i2pjaqnfr5tpnkeqyxvc422oqh6ausna",
+  "defined_tags": {
+    "Oracle-Tags": {
+      "CreatedBy": "oracleidentitycloudservice/sridhar.doki@centroid.com",
+      "CreatedOn": "2024-04-30T07:29:48.598Z"
+    },
+    "costTracking": {
+      "costcenter": "centroid_offshore"
+    }
+  },
+  "destinations": [
+    "ocid1.onstopic.oc1.iad.amaaaaaa6rfcedyaadaueqxlci4hzcsqrs7gvxvcgccdypumom7sjlof2joa"
+  ],
+  "display_name": "olam server cpu utilization greater than 90%",
+  "freeform_tags": {
+    "CTX_NOTIFICATIONS_COMPUTE_ID": "ocid1.instance.oc1.iad.anuwcljt6rfcedyccsebaern4qc2whnrpk6whjboeb2uwyyiyfhha6sdsy2q"
+  },
+  "id": "ocid1.alarm.oc1.iad.aaaaaaaakkglc2cymqilvxxxt2emdudxxbxzpnxuhpy2pfkna5b6cxymrvvq",
+  "is_enabled": true,
+  "lifecycle_state": "ACTIVE",
+  "metric_compartment_id": "ocid1.compartment.oc1..aaaaaaaaandoxj5l4pipdkaqdaj7i2pjaqnfr5tpnkeqyxvc422oqh6ausna",
+  "namespace": "oci_computeagent",
+  "query": "CpuUtilization[5m]{resourceId = \"ocid1.instance.oc1.iad.anuwcljt6rfcedyccsebaern4qc2whnrpk6whjboeb2uwyyiyfhha6sdsy2q\"}.Mean() > 90",
+  "severity": "WARNING",
+  "suppression": {
+    "description": "Planned outage",
+    "time_suppress_from": "2024-05-06T11:05:00+00:00",
+    "time_suppress_until": "2024-05-06T11:15:00+00:00"
+  }
+}, {
+  "compartment_id": "ocid1.compartment.oc1..aaaaaaaaandoxj5l4pipdkaqdaj7i2pjaqnfr5tpnkeqyxvc422oqh6ausna",
+  "defined_tags": {
+    "Oracle-Tags": {
+      "CreatedBy": "oracleidentitycloudservice/madhuravani.peddi@centroid.com",
+      "CreatedOn": "2024-05-01T12:40:03.453Z"
+    },
+    "costTracking": {
+      "costcenter": "centroid_offshore"
+    }
+  },
+  "destinations": [
+    "ocid1.onstopic.oc1.iad.amaaaaaa6rfcedyagekg65jrb65erxj2fd26dhv2eic43tc4ofemmklu3e5a"
+  ],
+  "display_name": "cenolam01_CPU_Utilization",
+  "freeform_tags": {
+    "CTX_NOTIFICATIONS_COMPUTE_ID": "ocid1.instance.oc1.iad.anuwcljt6rfcedycm26mfuhyamndf2isdeyku2ug5ddofhbcuj7qdgrjchsq"
+  },
+  "id": "ocid1.alarm.oc1.iad.aaaaaaaaa2khp5m3wqeyvsvs2wnitpmaft5zolokmbbvwu3lueehdqzgcwwq",
+  "is_enabled": true,
+  "lifecycle_state": "ACTIVE",
+  "metric_compartment_id": "ocid1.compartment.oc1..aaaaaaaaandoxj5l4pipdkaqdaj7i2pjaqnfr5tpnkeqyxvc422oqh6ausna",
+  "namespace": "oci_computeagent",
+  "query": "CpuUtilization[5m]{resourceId = \"ocid1.instance.oc1.iad.anuwcljt6rfcedycm26mfuhyamndf2isdeyku2ug5ddofhbcuj7qdgrjchsq\"}.Mean() > 90",
+  "severity": "WARNING",
+  "suppression": {
+    "description": "Planned outage",
+    "time_suppress_from": "2024-05-06T11:05:00+00:00",
+    "time_suppress_until": "2024-05-06T11:15:00+00:00"
+  }
+}, {
+  "compartment_id": "ocid1.compartment.oc1..aaaaaaaaandoxj5l4pipdkaqdaj7i2pjaqnfr5tpnkeqyxvc422oqh6ausna",
+  "defined_tags": {
+    "Oracle-Tags": {
+      "CreatedBy": "oracleidentitycloudservice/madhuravani.peddi@centroid.com",
+      "CreatedOn": "2024-05-06T06:59:55.488Z"
+    },
+    "costTracking": {
+      "costcenter": "centroid_offshore"
+    }
+  },
+  "destinations": [
+    "ocid1.onstopic.oc1.iad.amaaaaaa6rfcedya4lvdho66hx5juqzpuoralab2dylbotfgs5c5nsrbo3cq"
+  ],
+  "display_name": "cenolam01-resourecName-MemoryUtilization",
+  "freeform_tags": {},
+  "id": "ocid1.alarm.oc1.iad.aaaaaaaazvzi72k7sdq5wyvdpqqhpuvnwndrg6n4wswoekusxm3674mwp2ca",
+  "is_enabled": true,
+  "lifecycle_state": "ACTIVE",
+  "metric_compartment_id": "ocid1.compartment.oc1..aaaaaaaaandoxj5l4pipdkaqdaj7i2pjaqnfr5tpnkeqyxvc422oqh6ausna",
+  "namespace": "oci_computeagent",
+  "query": "MemoryUtilization[1m]{resourceDisplayName = \"cenolam01\"}.mean() > 85",
+  "severity": "CRITICAL",
+  "suppression": {
+    "description": "Planned outage",
+    "time_suppress_from": "2024-05-06T11:05:00+00:00",
+    "time_suppress_until": "2024-05-06T11:15:00+00:00"
+  }
+}, {
+  "compartment_id": "ocid1.compartment.oc1..aaaaaaaaandoxj5l4pipdkaqdaj7i2pjaqnfr5tpnkeqyxvc422oqh6ausna",
+  "defined_tags": {
+    "Oracle-Tags": {
+      "CreatedBy": "oracleidentitycloudservice/madhuravani.peddi@centroid.com",
+      "CreatedOn": "2024-05-05T16:22:50.537Z"
+    },
+    "costTracking": {
+      "costcenter": "centroid_offshore"
+    }
+  },
+  "destinations": [
+    "ocid1.onstopic.oc1.iad.amaaaaaa6rfcedya4lvdho66hx5juqzpuoralab2dylbotfgs5c5nsrbo3cq"
+  ],
+  "display_name": "CPU Utilization for olam server test",
+  "freeform_tags": {},
+  "id": "ocid1.alarm.oc1.iad.aaaaaaaaqpslwer5v4lt2rk42lffbhscgtxx2tel7qbajxdr47ho6a63geha",
+  "is_enabled": true,
+  "lifecycle_state": "ACTIVE",
+  "metric_compartment_id": "ocid1.compartment.oc1..aaaaaaaaandoxj5l4pipdkaqdaj7i2pjaqnfr5tpnkeqyxvc422oqh6ausna",
+  "namespace": "oci_computeagent",
+  "query": "CpuUtilization[1m]{resourceId = \"ocid1.instance.oc1.iad.anuwcljt6rfcedyccsebaern4qc2whnrpk6whjboeb2uwyyiyfhha6sdsy2q\"}.min() >= 80",
+  "severity": "CRITICAL",
+  "suppression": {
+    "description": "Planned outage",
+    "time_suppress_from": "2024-05-06T11:05:00+00:00",
+    "time_suppress_until": "2024-05-06T11:15:00+00:00"
+  }
+}, {
+  "compartment_id": "ocid1.compartment.oc1..aaaaaaaaandoxj5l4pipdkaqdaj7i2pjaqnfr5tpnkeqyxvc422oqh6ausna",
+  "defined_tags": {
+    "Oracle-Tags": {
+      "CreatedBy": "oracleidentitycloudservice/madhuravani.peddi@centroid.com",
+      "CreatedOn": "2024-05-05T16:22:53.109Z"
+    },
+    "costTracking": {
+      "costcenter": "centroid_offshore"
+    }
+  },
+  "destinations": [
+    "ocid1.onstopic.oc1.iad.amaaaaaa6rfcedya4lvdho66hx5juqzpuoralab2dylbotfgs5c5nsrbo3cq"
+  ],
+  "display_name": "CPU Utilization for cenolam01",
+  "freeform_tags": {},
+  "id": "ocid1.alarm.oc1.iad.aaaaaaaay7pt3ziutxce7gn76ttrf2wmcjgrm4bsykxhbfntpk2ubx77n3gq",
+  "is_enabled": true,
+  "lifecycle_state": "ACTIVE",
+  "metric_compartment_id": "ocid1.compartment.oc1..aaaaaaaaandoxj5l4pipdkaqdaj7i2pjaqnfr5tpnkeqyxvc422oqh6ausna",
+  "namespace": "oci_computeagent",
+  "query": "CpuUtilization[1m]{resourceId = \"ocid1.instance.oc1.iad.anuwcljt6rfcedycm26mfuhyamndf2isdeyku2ug5ddofhbcuj7qdgrjchsq\"}.min() >= 80",
+  "severity": "CRITICAL",
+  "suppression": {
+    "description": "Planned outage",
+    "time_suppress_from": "2024-05-06T11:05:00+00:00",
+    "time_suppress_until": "2024-05-06T11:15:00+00:00"
+  }
+}]
