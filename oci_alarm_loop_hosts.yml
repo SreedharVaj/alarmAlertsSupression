@@ -100,7 +100,8 @@
       oci_monitoring_alarm_suppression:
         alarm_suppression_target:
             target_type: ALARM
-            alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
+            alarm_id: "{{ alarm_item }}"
+            # alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
         display_name: display_name_example
         dimensions:
           resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
