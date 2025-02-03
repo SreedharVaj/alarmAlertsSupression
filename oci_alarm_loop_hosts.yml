@@ -100,6 +100,11 @@
       set_fact:
         alarm_item: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
 
+    - name: Debug alarm_suppression_target
+      debug:
+        var: alarm_suppression_target
+
+
 
     - name: Create alarm_suppression
       oci_monitoring_alarm_suppression:
