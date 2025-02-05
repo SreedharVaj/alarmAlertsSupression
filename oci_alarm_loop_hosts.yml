@@ -61,25 +61,41 @@
       debug: var=alarm_ids
       when: list_eligible_only
 
-    - name: Now suppress alarms based on the input arguments
-      block:
-        - name: Suppress Alarms with date and time
-          oci_monitoring_alarm:
-            alarm_id: "{{ alarm_item }}"
-            suppression:
-              time_suppress_from: "{{ start_time }}"
-              time_suppress_until: "{{ end_time }}"
-              description: "{{ outage_description }}"
-              dimensions:
-                resourceDisplayName: "{{ hostvars[target].display_name }}"
-          with_items: "{{ alarm_ids }}"
-          loop_control:
-            loop_var: alarm_item
-          when: add_suppression
-      when: add_suppression
-      rescue:
-        - fail:
-            msg: "{{ ansible_failed_task }} {{ ansible_failed_result }}"
+
+
+    - name: Suppress alarm for a specific resource
+      oracle.oci.oci_monitoring_alarm_suppression:
+        alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
+        alarm_suppression_target:
+          target_type: "ALARM"
+          alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
+          display_name: "Example Suppression"
+          dimensions:
+            resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
+          time_suppress_from: "2025-02-21T01:00:00.000Z"
+          time_suppress_until: "2025-02-21T01:20:00.000Z"
+
+
+
+    # - name: Now suppress alarms based on the input arguments
+    #   block:
+    #     - name: Suppress Alarms with date and time
+    #       oci_monitoring_alarm:
+    #         alarm_id: "{{ alarm_item }}"
+    #         suppression:
+    #           time_suppress_from: "{{ start_time }}"
+    #           time_suppress_until: "{{ end_time }}"
+    #           description: "{{ outage_description }}"
+    #           dimensions:
+    #             resourceDisplayName: "{{ hostvars[target].display_name }}"
+    #       with_items: "{{ alarm_ids }}"
+    #       loop_control:
+    #         loop_var: alarm_item
+    #       when: add_suppression
+    #   when: add_suppression
+    #   rescue:
+    #     - fail:
+    #         msg: "{{ ansible_failed_task }} {{ ansible_failed_result }}"
 
     - name: Now remove the suppression based on the input arguments
       block:
