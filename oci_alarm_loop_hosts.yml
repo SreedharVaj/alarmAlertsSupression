@@ -62,7 +62,6 @@
       when: list_eligible_only
 
 
-
     - name: Suppress alarm for a specific resource
       oci_monitoring_alarm_suppression:
         alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
