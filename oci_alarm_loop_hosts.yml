@@ -78,7 +78,7 @@
               time_suppress_until: "{{ end_time }}"
               description: "{{ outage_description }}"
               dimensions:
-                resourceDisplayName: "{{ hostvars[target].display_name }}"
+                resourceDisplayName: "{{ hostvars[alarm_item].display_name }}"
           with_items: "{{ alarm_ids }}"
           loop_control:
             loop_var: alarm_item
