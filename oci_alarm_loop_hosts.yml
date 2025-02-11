@@ -68,25 +68,25 @@
 
 
 
-    - name: Now suppress alarms based on the input arguments
-      block:
-        - name: Suppress Alarms with date and time
-          oci_monitoring_alarm:
-            alarm_id: "{{ alarm_item }}"
-            suppression:
-              time_suppress_from: "{{ start_time }}"
-              time_suppress_until: "{{ end_time }}"
-              description: "{{ outage_description }}"
-              dimensions:
-                resourceDisplayName: "{{ instance_name }}"
-          with_items: "{{ alarm_ids }}"
-          loop_control:
-            loop_var: alarm_item
-          when: add_suppression
-      when: add_suppression
-      rescue:
-        - fail:
-            msg: "{{ ansible_failed_task }} {{ ansible_failed_result }}"
+    # - name: Now suppress alarms based on the input arguments
+    #   block:
+    #     - name: Suppress Alarms with date and time
+    #       oci_monitoring_alarm:
+    #         alarm_id: "{{ alarm_item }}"
+    #         suppression:
+    #           time_suppress_from: "{{ start_time }}"
+    #           time_suppress_until: "{{ end_time }}"
+    #           description: "{{ outage_description }}"
+    #           dimensions:
+    #             resourceDisplayName: "{{ hostvars[target].display_name }}"
+    #       with_items: "{{ alarm_ids }}"
+    #       loop_control:
+    #         loop_var: alarm_item
+    #       when: add_suppression
+    #   when: add_suppression
+    #   rescue:
+    #     - fail:
+    #         msg: "{{ ansible_failed_task }} {{ ansible_failed_result }}"
 
     - name: Now remove the suppression based on the input arguments
       block:
