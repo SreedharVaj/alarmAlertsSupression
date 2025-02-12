@@ -1,0 +1,173 @@
+- name: Alarm Suppress based on Host or group provided
+  hosts: localhost
+  gather_facts: true
+
+  collections:
+    - oracle.oci
+
+  vars:
+    target: "{{ group1 }}"
+    list_eligible_only: "{{ list_eligible_only }}"
+    remove_suppression: "{{ remove_suppression }}"
+    add_suppression: "{{ add_suppression }}"
+    outage_description: "{{ outage_description }}"
+    start_time: "{{ start_time }}"
+    end_time: "{{ end_time }}"
+
+  tasks:
+
+    - name: Debug target variable
+      ansible.builtin.debug:
+        var: target
+
+    - name: Debug available groups
+      ansible.builtin.debug:
+        var: groups
+
+    - name: Debug hostvars
+      debug:
+        var: hostvars[target]
+
+
+
+    - name: host inventory group loop
+      ansible.builtin.debug:
+        msg: hostname "{{ hostvars[item].display_name }}"
+      with_items:
+        - "{{ groups[target] }}"
+      when: "target in groups"
+
+    - name: Create a List variable and print it
+      set_fact:
+        alarm_ids: []
+
+    - name: host inventory group loop for host {{ item }}
+      include_tasks: oci_alarm_suppress.yml
+      vars:
+        instance_name: "{{ hostvars[item].display_name }}"
+        instance_id: "{{ hostvars[item].id }}"
+        instance_compartment: "{{ hostvars[item].compartment_id }}"
+      with_items:
+        - "{{ groups[target] }}"
+      when: "target in groups"
+
+    - name: host inventory loop
+      block:
+        - name: host var loop block
+          include_tasks: oci_alarm_suppress.yml
+          vars:
+            instance_name: "{{ hostvars[target].display_name }}"
+            instance_id: "{{ hostvars[target].id }}"
+            instance_compartment: "{{ hostvars[target].compartment_id }}"
+      when: "target in hostvars"
+
+    - name: Print the list of eligible alarm ids
+      debug: var=alarm_ids
+      when: list_eligible_only
+
+
+
+
+    # - name: Now suppress alarms based on the input arguments
+    #   block:
+    #     - name: Suppress Alarms with date and time
+    #       oci_monitoring_alarm:
+    #         alarm_id: "{{ alarm_item }}"
+    #         suppression:
+    #           time_suppress_from: "{{ start_time }}"
+    #           time_suppress_until: "{{ end_time }}"
+    #           description: "{{ outage_description }}"
+    #           dimensions:
+    #             resourceDisplayName: "{{ hostvars[target].display_name }}"
+    #       with_items: "{{ alarm_ids }}"
+    #       loop_control:
+    #         loop_var: alarm_item
+    #       when: add_suppression
+    #   when: add_suppression
+    #   rescue:
+    #     - fail:
+    #         msg: "{{ ansible_failed_task }} {{ ansible_failed_result }}"
+
+    - name: Now remove the suppression based on the input arguments
+      block:
+        - name: Remove Suppression from eligible Alarms
+          oci_monitoring_alarm_actions:
+            alarm_id: "{{ alarm_item }}"
+            action: remove_alarm_suppression
+          with_items: "{{ alarm_ids }}"
+          loop_control:
+            loop_var: alarm_item
+          when: remove_suppression
+      when: remove_suppression
+      rescue:
+        - fail:
+            msg: "{{ ansible_failed_task }} {{ ansible_failed_result }}"
+
+    - name: Set alarm_item variable
+      set_fact:
+        alarm_item: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
+
+
+
+
+
+    # - name: Suppress alarm for a specific resource
+    #   oracle.oci.oci_monitoring_alarm_suppression:
+    #     alarm_id: "{{ alarm_ids[0] }}"
+    #     alarm_suppression_target:
+    #       target_type: "ALARM"
+    #       alarm_id: "{{ alarm_ids[0] }}"
+    #     display_name: "Example Suppression"
+    #     dimensions:
+    #         resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
+    #     time_suppress_from: "{{ start_time }}" #"2025-02-21T01:00:00.000Z"
+    #     time_suppress_until: "{{ end_time }}"  #"2025-02-21T01:21:00.000Z"
+
+
+    # - name: Suppress alarm for a specific resource
+    #   oracle.oci.oci_monitoring_alarm_suppression:
+    #     alarm_id: "{{ alarm_ids[0] }}"
+    #     target_type: "ALARM"
+    #     time_suppress_from: "{{ start_time }}"  
+    #     time_suppress_until: "{{ end_time }}"   
+    #     state: "present"
+
+
+    - name: Delete alarm_suppression
+      oci_monitoring_alarm_suppression:
+        alarm_suppression_id: "{{ alarm_ids[0] }}"
+        state: absent
+
+
+
+
+
+
+    # - name: Create alarm_suppression
+    #   oci_monitoring_alarm_suppression:
+    #     alarm_suppression_target:
+    #         target_type: ALARM
+    #         alarm_id: "{{ alarm_item }}"
+            # alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
+
+        # display_name: display_name_example
+        # dimensions:
+        #   resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
+        # time_suppress_from: "{{ start_time }}"
+        # time_suppress_until: "{{ end_time }}"
+        # description: "{{ outage_description }}"
+
+
+
+
+      # with_items: "{{ alarm_ids }}"
+      # loop_control:
+      #   loop_var: alarm_item
+    #   when: add_suppression
+    # - name: Check version of community.general
+    #   ansible.builtin.debug:
+    #     msg: "oracle.oci version {{ lookup('community.general.collection_version', 'oracle.oci') }}"
+
+    - name: Debug alarm_suppression_target
+      debug:
+        var: alarm_suppression_target
