@@ -112,7 +112,7 @@
 
 
     - name: Suppress alarm for a specific resource
-      oci_monitoring_alarm_suppression:
+      oracle.oci.oci_monitoring_alarm_suppression:
         alarm_id: "{{ alarm_ids[0] }}"
         alarm_suppression_target:
           target_type: "ALARM"
