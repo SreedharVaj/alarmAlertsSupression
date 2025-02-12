@@ -111,17 +111,26 @@
 
 
 
+    # - name: Suppress alarm for a specific resource
+    #   oracle.oci.oci_monitoring_alarm_suppression:
+    #     alarm_id: "{{ alarm_ids[0] }}"
+    #     alarm_suppression_target:
+    #       target_type: "ALARM"
+    #       alarm_id: "{{ alarm_ids[0] }}"
+    #     display_name: "Example Suppression"
+    #     dimensions:
+    #         resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
+    #     time_suppress_from: "{{ start_time }}" #"2025-02-21T01:00:00.000Z"
+    #     time_suppress_until: "{{ end_time }}"  #"2025-02-21T01:21:00.000Z"
+
+
     - name: Suppress alarm for a specific resource
       oracle.oci.oci_monitoring_alarm_suppression:
         alarm_id: "{{ alarm_ids[0] }}"
-        alarm_suppression_target:
-          target_type: "ALARM"
-          alarm_id: "{{ alarm_ids[0] }}"
-        display_name: "Example Suppression"
-        dimensions:
-            resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
-        time_suppress_from: "{{ start_time }}" #"2025-02-21T01:00:00.000Z"
-        time_suppress_until: "{{ end_time }}"  #"2025-02-21T01:21:00.000Z"
+        target_type: "ALARM"
+        time_suppress_from: "{{ start_time }}"  
+        time_suppress_until: "{{ end_time }}"   
+        state: "present"
 
 
 
