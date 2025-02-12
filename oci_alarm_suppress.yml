@@ -32,6 +32,11 @@
       loop_control:
         loop_var: result_item
         
+
+    - name: Debug alarm_ids
+      debug:
+        var: alarm_ids
+
   rescue:
     - fail:
         msg: "{{ ansible_failed_task }} {{ ansible_failed_result }}"
