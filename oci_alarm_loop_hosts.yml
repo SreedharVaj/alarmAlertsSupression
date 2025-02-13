@@ -103,7 +103,7 @@
           target_type: ALARM
           alarm_id: "{{ alarm_ids[0] }}"
         display_name: "Sample suppression1"
-        dimensions: null 
+        # dimensions: null 
         time_suppress_from: "2025-02-29T01:00:00.000Z"
         time_suppress_until: "2025-02-29T01:21:00.000Z"
         description: "Planned outage"
