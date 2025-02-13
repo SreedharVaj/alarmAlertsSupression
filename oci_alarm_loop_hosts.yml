@@ -84,7 +84,7 @@
             msg: "{{ ansible_failed_task }} {{ ansible_failed_result }}"
 
     - name: Create alarm_suppression
-      oci_monitoring_alarm_suppression:
+      oracle.oci.oci_monitoring_alarm_suppression:
         alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
         alarm_suppression_target:
             target_type: ALARM
