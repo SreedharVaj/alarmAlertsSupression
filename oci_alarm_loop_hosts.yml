@@ -130,10 +130,10 @@
         alarm_suppression:
           id: "ocidi.alarmsuppression.oc1.iad.aaaaaaaaa2kn241gdffaxff4a4kkzbkgccag6rttjklfkioeeah11hv42tuq"
           compartment_id: "ocid1.compartment.oc1..aaaaaaaawgo17adxtveix2axrpvxic1fbr7t51664gdgpopgcfhp4pq2giza"
-          alarm_suppression_target: {}
-          target_type: ALARM
-          alarm_id: "ocidi.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
-          display_name: "Example Suppression"
+          alarm_suppression_target: 
+            target_type: ALARM
+            alarm_id: "ocidi.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
+          display_name: "Example Suppression12"
           description: null
           dimensions:
             resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
