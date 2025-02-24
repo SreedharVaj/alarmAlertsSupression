@@ -134,6 +134,7 @@
           resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
         time_suppress_from: "{{ start_time }}"
         time_suppress_until: "{{ end_time }}"
+        state: "present"
      
 
     # - name: Create alarm suppression
