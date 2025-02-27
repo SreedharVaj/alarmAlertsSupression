@@ -85,60 +85,6 @@
 
 
 
-    # - name: Create alarm_suppression
-    #   oracle.oci.oci_monitoring_alarm_suppression:
-    #     alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
-    #     display_name: "Sample suppression1"
-    #     dimensions:
-    #       resource_id: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
-    #     time_suppress_from: "{{ start_time }}"
-    #     time_suppress_until: "{{ end_time }}"
-    #     description: "{{ outage_description }}"
-
-
-    # - name: Create alarm_suppression
-    #   oracle.oci.oci_monitoring_alarm_suppression:
-    #     alarm_id: "{{ alarm_ids[0] }}"
-    #     alarm_suppression_target:
-    #       target_type: ALARM
-    #       alarm_id: "{{ alarm_ids[0] }}"
-    #     display_name: "Sample suppression1"
-    #     # dimensions: null 
-    #     time_suppress_from: "2025-02-29T01:00:00.000Z"
-    #     time_suppress_until: "2025-02-29T01:21:00.000Z"
-    #     description: "Planned outage"
-
-
-
-    # - name: Create alarm_suppression
-    #   oracle.oci.oci_monitoring_alarm_suppression:
-    #     alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
-    #     alarm_suppression_target:
-    #         target_type: ALARM
-    #         alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
-    #     display_name: "Sample suppression1"
-    #     dimensions:
-    #       resource_id: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
-    #     time_suppress_from: "{{ start_time }}"
-    #     time_suppress_until: "{{ end_time }}"
-    #     description: "{{ outage_description }}"
-
-    # - name: Create alarm_suppression
-    #   oracle.oci.oci_monitoring_alarm_suppression:
-    #     alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
-    #     alarm_suppression_target:
-    #       target_type: "ALARM"
-    #       alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
-    #     display_name: "Sample suppression1"
-    #     dimensions:
-    #       resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
-    #     time_suppress_from: "{{ start_time }}"
-    #     time_suppress_until: "{{ end_time }}"
-    #     state: "present"
-     
-
-
-
     - name: Suppress alarm for a specific resource
       oracle.oci.oci_monitoring_alarm_suppression:
         alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
@@ -151,25 +97,7 @@
         time_suppress_from: "{{ start_time_main }}"
         time_suppress_until: "{{ end_time_main }}"
         
-        # time_suppress_from: "2025-03-14T01:00:00.000Z"
-        # time_suppress_until: "2025-03-15T01:20:00.000Z"
-              #  "start_time": "2025-02-29T01:00:00.000Z",
-              #    "end_time": "2025-02-29T01:21:00.000Z",
-
-    # - name: Create alarm suppression
-    #   oracle.oci.oci_monitoring_alarm_suppression:
-    #     alarm_suppression:
-    #       id: "ocidi.alarmsuppression.oc1.iad.aaaaaaaaa2kn241gdffaxff4a4kkzbkgccag6rttjklfkioeeah11hv42tuq"
-    #       compartment_id: "ocid1.compartment.oc1..aaaaaaaawgo17adxtveix2axrpvxic1fbr7t51664gdgpopgcfhp4pq2giza"
-    #       alarm_suppression_target: 
-    #         target_type: ALARM
-    #         alarm_id: "ocidi.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
-    #       display_name: "Example Suppression12"
-    #       description: null
-    #       dimensions:
-    #         resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
-    #       time_suppress_from: "2025-02-21T01:00:00+00:00"
-    #       time_suppress_until: "2025-02-21T01:20:00+00:00"
+ 
 
       # with_items: "{{ alarm_ids }}"
       # loop_control:
