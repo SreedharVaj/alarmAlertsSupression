@@ -11,8 +11,8 @@
     remove_suppression: "{{ remove_suppression }}"
     add_suppression: "{{ add_suppression }}"
     outage_description: "{{ outage_description }}"
-    start_time: "{{ start_time }}"
-    end_time: "{{ end_time }}"
+    start_time_main: "{{ start_time }}"
+    end_time_main: "{{ end_time }}"
 
   tasks:
     - name: host inventory group loop
@@ -148,11 +148,13 @@
         display_name: "Example Suppression"
         dimensions:
           resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
-        # time_suppress_from: "{{ start_time }}"
-        # time_suppress_until: "{{ end_time }}"
+        time_suppress_from: "{{ start_time_main }}"
+        time_suppress_until: "{{ end_time_main }}"
         
-        time_suppress_from: "2025-03-14T01:00:00.000Z"
-        time_suppress_until: "2025-03-15T01:20:00.000Z"
+        # time_suppress_from: "2025-03-14T01:00:00.000Z"
+        # time_suppress_until: "2025-03-15T01:20:00.000Z"
+              #  "start_time": "2025-02-29T01:00:00.000Z",
+              #    "end_time": "2025-02-29T01:21:00.000Z",
 
     # - name: Create alarm suppression
     #   oracle.oci.oci_monitoring_alarm_suppression:
