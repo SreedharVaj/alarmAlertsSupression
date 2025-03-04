@@ -136,6 +136,12 @@
     #     loop_var: alarm_item
 
 
+
+    - name: Debug hostvars for target
+      debug:
+        var: hostvars[target]
+      when: target in hostvars
+
     - name: Suppress alarm for a specific resource
       oracle.oci.oci_monitoring_alarm_suppression:
         alarm_id: "{{ alarm_item }}"
