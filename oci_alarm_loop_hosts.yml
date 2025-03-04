@@ -103,9 +103,9 @@
         var: all_alarms
  
 
-    - name: Print the list of alarm IDs
+    - name: Print the alarm ID
       debug:
-        msg: "{{ all_alarms.alarm | map(attribute='id') | list }}"
+        msg: "{{ all_alarms.alarm.id }}"
 
     # - name: Suppress alarm for a specific resource
     #   oracle.oci.oci_monitoring_alarm_suppression:
