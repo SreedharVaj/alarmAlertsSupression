@@ -137,10 +137,7 @@
 
 
 
-    - name: Debug hostvars for target
-      debug:
-        var: hostvars[target]
-      when: target in hostvars
+
 
     - name: Suppress alarm for a specific resource
       oracle.oci.oci_monitoring_alarm_suppression:
@@ -154,9 +151,10 @@
         time_suppress_from: "{{ start_time_main }}"
         time_suppress_until: "{{ end_time_main }}"
       with_items: 
-        - "{{ all_alarms.alarm.id }}"  # Convert single value into a list
+        - "{{ all_alarms.alarm.id }}"  
       loop_control:
         loop_var: alarm_item
+      when: target in hostvars 
         
  
 
