@@ -86,14 +86,14 @@
 
 
 
-    # - name: Get all alarms in the compartment
-    #   oracle.oci.oci_monitoring_alarm:
-    #     compartment_id: "{{ compartment_id }}"  
-    #   register: all_alarms  
+    - name: Get all alarms in the compartment
+      oracle.oci.oci_monitoring_alarm:
+        compartment_id: "{{ compartment_id }}"  
+      register: all_alarms  
 
-    # - name: Print the list of alarm IDs
-    #   debug:
-    #     msg: "{{ all_alarms.alarms | map(attribute='id') | list }}"  # Get the alarm IDs from the response
+    - name: Print the list of alarm IDs
+      debug:
+        msg: "{{ all_alarms.alarms | map(attribute='id') | list }}"  # Get the alarm IDs from the response
 
 
     # - name: Suppress alarm for a specific resource
