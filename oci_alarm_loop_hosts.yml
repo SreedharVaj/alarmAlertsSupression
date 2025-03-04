@@ -97,6 +97,10 @@
       register: all_alarms
       when: compartment_id is defined
 
+
+    - name: Debug full alarm response
+      debug:
+        var: all_alarms
  
 
     - name: Print the list of alarm IDs
