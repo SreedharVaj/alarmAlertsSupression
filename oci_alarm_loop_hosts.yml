@@ -86,10 +86,18 @@
 
 
 
+    - name: Set compartment_id dynamically
+      set_fact:
+        compartment_id: "{{ hostvars[target].compartment_id | default(hostvars[groups[target][0]].compartment_id, true) }}"
+      when: target in hostvars or target in groups
+
     - name: Get all alarms in the compartment
       oracle.oci.oci_monitoring_alarm:
         compartment_id: "{{ compartment_id }}"  
-      register: all_alarms  
+      register: all_alarms
+      when: compartment_id is defined
+
+ 
 
     - name: Print the list of alarm IDs
       debug:
