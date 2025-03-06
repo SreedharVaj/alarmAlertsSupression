@@ -124,6 +124,10 @@
       debug:
         var: target
 
+    - name: Debug available hostvars keys
+      debug:
+        var: hostvars.keys()
+
 
     - name: Suppress alarm for a specific resource
       oracle.oci.oci_monitoring_alarm_suppression:
