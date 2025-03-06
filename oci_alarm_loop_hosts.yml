@@ -129,22 +129,43 @@
         var: hostvars.keys()
 
 
+    # - name: Suppress alarm for a specific resource
+    #   oracle.oci.oci_monitoring_alarm_suppression:
+    #     alarm_id: "{{ alarm_item }}"
+    #     alarm_suppression_target:
+    #       target_type: "ALARM"
+    #       alarm_id: "{{ alarm_item }}"
+    #     display_name: "Suppression for {{ hostvars[target].display_name }}"
+    #     dimensions:
+    #       resourceId: "{{ hostvars[target].id }}"
+    #     time_suppress_from: "{{ start_time_main }}"
+    #     time_suppress_until: "{{ end_time_main }}"
+    #   with_items: 
+    #     - "{{ all_alarms.alarm.id }}"  
+    #   loop_control:
+    #     loop_var: alarm_item
+    #   when: target in hostvars 
+
+
     - name: Suppress alarm for a specific resource
       oracle.oci.oci_monitoring_alarm_suppression:
         alarm_id: "{{ alarm_item }}"
         alarm_suppression_target:
           target_type: "ALARM"
           alarm_id: "{{ alarm_item }}"
-        display_name: "Suppression for {{ hostvars[target].display_name }}"
+        display_name: "Suppression for {{ hostvars[selected_host].display_name }}"
         dimensions:
-          resourceId: "{{ hostvars[target].id }}"
+          resourceId: "{{ hostvars[selected_host].id }}"
         time_suppress_from: "{{ start_time_main }}"
         time_suppress_until: "{{ end_time_main }}"
       with_items: 
         - "{{ all_alarms.alarm.id }}"  
       loop_control:
         loop_var: alarm_item
-      when: target in hostvars 
+      vars:
+        selected_host: "{{ groups[target][0] | default('') }}"  # Pick first host from the group
+      when: target in groups and selected_host in hostvars
+
         
  
 
