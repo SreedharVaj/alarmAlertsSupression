@@ -120,23 +120,9 @@
     #     time_suppress_until: "{{ end_time_main }}"
 
 
-    # - name: Suppress alarm for a specific resource
-    #   oracle.oci.oci_monitoring_alarm_suppression:
-    #     alarm_id: "{{ alarm_item }}"
-    #     alarm_suppression_target:
-    #       target_type: "ALARM"
-    #       alarm_id: "{{ alarm_item }}"
-    #     display_name: "Suppression for {{ hostvars[target].display_name }}"
-    #     dimensions:
-    #       resourceId: "{{ hostvars[target].id }}"
-    #     time_suppress_from: "{{ start_time_main }}"
-    #     time_suppress_until: "{{ end_time_main }}"
-    #   with_items: "{{ all_alarms.alarms | map(attribute='id') | list }}"
-    #   loop_control:
-    #     loop_var: alarm_item
-
-
-
+    - name: Debug target value
+      debug:
+        var: target
 
 
     - name: Suppress alarm for a specific resource
