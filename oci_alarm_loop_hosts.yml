@@ -161,7 +161,9 @@
           alarm_id: "{{ alarm_item }}"
         display_name: "Suppression for {{ hostvars[selected_host].display_name }}"
         dimensions: 
-          resourceDisplayName: "{{ hostvars[selected_host].display_name }}"
+          # resourceDisplayName: "{{ hostvars[selected_host].display_name }}"
+          resourceDisplayName : "OEL7TESTVM"
+          
         time_suppress_from: "{{ start_time_main }}"
         time_suppress_until: "{{ end_time_main }}"
       with_items: 
