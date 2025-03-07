@@ -111,6 +111,21 @@
       debug:
         msg: "{{ all_alarms.alarm.id }}"
 
+
+
+    - name: Suppress alarm for a specific resource
+      oracle.oci.oci_monitoring_alarm_suppression:
+        alarm_id: "{{ alarm_item }}"
+        alarm_suppression_target:
+          target_type: "ALARM"
+        display_name: "Suppression for {{ alarm_item }}"
+        time_suppress_from: "{{ start_time_main }}"
+        time_suppress_until: "{{ end_time_main }}"
+      with_items: 
+        - "{{ all_alarms.alarm.id }}"  
+      loop_control:
+        loop_var: alarm_item
+
     # - name: Suppress alarm for a specific resource
     #   oracle.oci.oci_monitoring_alarm_suppression:
     #     alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
@@ -138,22 +153,22 @@
         selected_host: "{{ groups[target][0] | default('') }}"  # Picks the first host from the group
       when: target in groups
 
-    - name: Suppress alarm for a specific resource
-      oracle.oci.oci_monitoring_alarm_suppression:
-        alarm_id: "{{ alarm_item }}"
-        alarm_suppression_target:
-          target_type: "ALARM"
-          alarm_id: "{{ alarm_item }}"
-        display_name: "Suppression for {{ hostvars[selected_host].display_name }}"
-        dimensions: null
-        #   resourceDisplayName: "{{ hostvars[selected_host].display_name }}"
-        time_suppress_from: "{{ start_time_main }}"
-        time_suppress_until: "{{ end_time_main }}"
-      with_items: 
-        - "{{ all_alarms.alarm.id }}"  
-      loop_control:
-        loop_var: alarm_item
-      when: selected_host in hostvars
+    # - name: Suppress alarm for a specific resource
+    #   oracle.oci.oci_monitoring_alarm_suppression:
+    #     alarm_id: "{{ alarm_item }}"
+    #     alarm_suppression_target:
+    #       target_type: "ALARM"
+    #       alarm_id: "{{ alarm_item }}"
+    #     display_name: "Suppression for {{ hostvars[selected_host].display_name }}"
+    #     dimensions: null
+    #     #   resourceDisplayName: "{{ hostvars[selected_host].display_name }}"
+    #     time_suppress_from: "{{ start_time_main }}"
+    #     time_suppress_until: "{{ end_time_main }}"
+    #   with_items: 
+    #     - "{{ all_alarms.alarm.id }}"  
+    #   loop_control:
+    #     loop_var: alarm_item
+    #   when: selected_host in hostvars
 
 
     # - name: Suppress alarm for a specific resource
