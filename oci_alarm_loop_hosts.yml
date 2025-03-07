@@ -101,6 +101,10 @@
     - name: Debug full alarm response
       debug:
         var: all_alarms
+
+    - name: Debug Full Alarm Details
+      debug:
+        var: all_alarms.alarm
  
 
     - name: Print the alarm ID
