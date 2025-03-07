@@ -145,7 +145,7 @@
         - "{{ all_alarms.alarm.id }}"  
       loop_control:
         loop_var: alarm_item
-      when: target in hostvars 
+      when: target in hostvars or target in groups
 
 
     # - name: Suppress alarm for a specific resource
