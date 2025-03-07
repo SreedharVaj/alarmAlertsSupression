@@ -129,6 +129,11 @@
         var: hostvars.keys()
 
 
+    - name: Select a valid host from the group
+      set_fact:
+        selected_host: "{{ groups[target][0] | default('') }}"  # Picks the first host from the group
+      when: target in groups
+
     - name: Suppress alarm for a specific resource
       oracle.oci.oci_monitoring_alarm_suppression:
         alarm_id: "{{ alarm_item }}"
@@ -145,7 +150,7 @@
         - "{{ all_alarms.alarm.id }}"  
       loop_control:
         loop_var: alarm_item
-      when: target in hostvars or target in groups
+      when: selected_host in hostvars
 
 
     # - name: Suppress alarm for a specific resource
