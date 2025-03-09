@@ -139,6 +139,29 @@
  
 
 
+    # - name: Suppress alarm for a specific resource
+    #   oracle.oci.oci_monitoring_alarm_suppression:
+    #     alarm_id: "{{ alarm_item }}"
+    #     alarm_suppression_target:
+    #       target_type: "ALARM"
+    #       alarm_id: "{{ alarm_item }}"
+    #     display_name: "Suppression for {{ hostvars[selected_host].display_name }}"
+    #     # dimensions:
+    #     #   resourceId: "{{ hostvars[selected_host].id }}"
+    #     dimensions: 
+    #       resourceDisplayName: "{{ alarm_item.dimensions.resourceDisplayName | default('') }}"
+    #     time_suppress_from: "{{ start_time_main }}"
+    #     time_suppress_until: "{{ end_time_main }}"
+    #   with_items: 
+    #     - "{{ alarm_ids }}"  
+    #   loop_control:
+    #     loop_var: alarm_item
+    #   vars:
+    #     selected_host: "{{ groups[target][0] | default('') }}"  # Pick first host from the group
+    #   # when: target in groups and selected_host in hostvars
+
+
+
     - name: Suppress alarm for a specific resource
       oracle.oci.oci_monitoring_alarm_suppression:
         alarm_id: "{{ alarm_item }}"
@@ -146,19 +169,19 @@
           target_type: "ALARM"
           alarm_id: "{{ alarm_item }}"
         display_name: "Suppression for {{ hostvars[selected_host].display_name }}"
-        # dimensions:
-        #   resourceId: "{{ hostvars[selected_host].id }}"
         dimensions: 
-          resourceDisplayName: "{{ alarm_item.dimensions.resourceDisplayName | default('') }}"
+          resourceDisplayName: "{{ alarm_dict[alarm_item] | default('') }}"
         time_suppress_from: "{{ start_time_main }}"
         time_suppress_until: "{{ end_time_main }}"
-      with_items: 
-        - "{{ alarm_ids }}"  
+      with_items: "{{ alarm_ids }}"
       loop_control:
         loop_var: alarm_item
       vars:
         selected_host: "{{ groups[target][0] | default('') }}"  # Pick first host from the group
-      # when: target in groups and selected_host in hostvars
+      when:
+        - alarm_dict[alarm_item] is defined
+        - alarm_dict[alarm_item] | length > 0
+
 
 
         
