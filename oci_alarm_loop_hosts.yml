@@ -148,13 +148,9 @@
         - "{{ alarm_ids }}"  
       loop_control:
         loop_var: alarm_item
-
-
-
-
-    #   vars:
-    #     selected_host: "{{ groups[target][0] | default('') }}"  # Pick first host from the group
-    #   when: target in groups and selected_host in hostvars
+      vars:
+        selected_host: "{{ groups[target][0] | default('') }}"  # Pick first host from the group
+      when: target in groups and selected_host in hostvars
 
 
         
