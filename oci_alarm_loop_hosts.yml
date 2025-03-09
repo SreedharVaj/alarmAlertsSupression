@@ -86,68 +86,72 @@
 
 
 
-    - name: Set compartment_id dynamically
-      set_fact:
-        compartment_id: "{{ hostvars[target].compartment_id | default(hostvars[groups[target][0]].compartment_id, true) }}"
-      when: target in hostvars or target in groups
+    # - name: Set compartment_id dynamically
+    #   set_fact:
+    #     compartment_id: "{{ hostvars[target].compartment_id | default(hostvars[groups[target][0]].compartment_id, true) }}"
+    #   when: target in hostvars or target in groups
 
-    - name: Get all alarms in the compartment
-      oracle.oci.oci_monitoring_alarm:
-        compartment_id: "{{ compartment_id }}"  
-      register: all_alarms
-      when: compartment_id is defined
+    # - name: Get all alarms in the compartment
+    #   oracle.oci.oci_monitoring_alarm:
+    #     compartment_id: "{{ compartment_id }}"  
+    #   register: all_alarms
+    #   when: compartment_id is defined
 
 
-    - name: Debug full alarm response
-      debug:
-        var: all_alarms
+    # - name: Debug full alarm response -- all_alarms
+    #   debug:
+    #     var: all_alarms
 
-    - name: Debug Full Alarm Details
-      debug:
-        var: all_alarms.alarm
+    # - name: Debug Full Alarm Details -- all_alarms.alarm
+    #   debug:
+    #     var: all_alarms.alarm
  
 
-    - name: Print the alarm ID
-      debug:
-        msg: "{{ all_alarms.alarm.id }}"
+    # - name: Print the alarm ID -- all_alarms.alarm.id
+    #   debug:
+    #     msg: "{{ all_alarms.alarm.id }}"
 
 
 
-
-
-    - name: Suppress alarm for a specific resource
-      oracle.oci.oci_monitoring_alarm_suppression:
-        alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
-        alarm_suppression_target:
-          target_type: "ALARM"
-          alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
-        display_name: "Example Suppression222"
-        dimensions:
-          resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
-        time_suppress_from: "{{ start_time_main }}"
-        time_suppress_until: "{{ end_time_main }}"
-
-
-
-
- 
 
 
     # - name: Suppress alarm for a specific resource
     #   oracle.oci.oci_monitoring_alarm_suppression:
-    #     alarm_id: "{{ alarm_item }}"
+    #     alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
     #     alarm_suppression_target:
     #       target_type: "ALARM"
-    #       alarm_id: "{{ alarm_item }}"
-    #     display_name: "Suppression for {{ hostvars[selected_host].display_name }}"
-    #     # dimensions:
-    #     #   resourceId: "{{ hostvars[selected_host].id }}"
+    #       alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
+    #     display_name: "Example Suppression222"
+    #     dimensions:
+    #       resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
     #     time_suppress_from: "{{ start_time_main }}"
     #     time_suppress_until: "{{ end_time_main }}"
-    #   with_items: 
-    #     - "{{ all_alarms.alarm.id }}"  
-    #   loop_control:
-    #     loop_var: alarm_item
+
+
+
+
+ 
+
+
+    - name: Suppress alarm for a specific resource
+      oracle.oci.oci_monitoring_alarm_suppression:
+        alarm_id: "{{ alarm_item }}"
+        alarm_suppression_target:
+          target_type: "ALARM"
+          alarm_id: "{{ alarm_item }}"
+        display_name: "Suppression for {{ hostvars[selected_host].display_name }}"
+        # dimensions:
+        #   resourceId: "{{ hostvars[selected_host].id }}"
+        time_suppress_from: "{{ start_time_main }}"
+        time_suppress_until: "{{ end_time_main }}"
+      with_items: 
+        - "{{ alarm_ids }}"  
+      loop_control:
+        loop_var: alarm_item
+
+
+
+
     #   vars:
     #     selected_host: "{{ groups[target][0] | default('') }}"  # Pick first host from the group
     #   when: target in groups and selected_host in hostvars
