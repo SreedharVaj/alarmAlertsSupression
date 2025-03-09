@@ -31,11 +31,29 @@
       when: alarm_results | length > 0 and (("resourceDisplayName = \"" + instance_name + "\"") in result_item.query or instance_id in result_item.query)
       loop_control:
         loop_var: result_item
-        
 
     - name: Debug alarm_ids
       debug:
         var: alarm_ids
+
+
+    - name: Build dictionary of alarms with resourceDisplayName
+      set_fact:
+        alarm_dict: "{{ alarm_dict | default({}) | combine({ result_item.id: result_item.dimensions.resourceDisplayName }) }}"
+      loop: "{{ alarm_results }}"
+      when: 
+        - alarm_results | length > 0
+        - result_item.dimensions is defined
+        - result_item.dimensions.resourceDisplayName is defined
+      loop_control:
+        loop_var: result_item
+
+    - name: Debug alarm_dict
+      debug:
+        var: alarm_dict
+        
+
+
 
   rescue:
     - fail:
