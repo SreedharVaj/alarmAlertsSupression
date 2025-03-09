@@ -129,6 +129,12 @@
 
 
 
+    - name: Debug Alarm Dimensions
+      debug:
+        msg: "{{ alarm_item.dimensions }}"
+      with_items: "{{ alarm_ids }}"
+      loop_control:
+        loop_var: alarm_item
 
  
 
