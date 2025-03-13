@@ -83,38 +83,6 @@
         - fail:
             msg: "{{ ansible_failed_task }} {{ ansible_failed_result }}"
 
-
-
-
-    # - name: Set compartment_id dynamically
-    #   set_fact:
-    #     compartment_id: "{{ hostvars[target].compartment_id | default(hostvars[groups[target][0]].compartment_id, true) }}"
-    #   when: target in hostvars or target in groups
-
-    # - name: Get all alarms in the compartment
-    #   oracle.oci.oci_monitoring_alarm:
-    #     compartment_id: "{{ compartment_id }}"  
-    #   register: all_alarms
-    #   when: compartment_id is defined
-
-
-    # - name: Debug full alarm response -- all_alarms
-    #   debug:
-    #     var: all_alarms
-
-    # - name: Debug Full Alarm Details -- all_alarms.alarm
-    #   debug:
-    #     var: all_alarms.alarm
- 
-
-    # - name: Print the alarm ID -- all_alarms.alarm.id
-    #   debug:
-    #     msg: "{{ all_alarms.alarm.id }}"
-
-
-
-
-
     # - name: Suppress alarm for a specific resource
     #   oracle.oci.oci_monitoring_alarm_suppression:
     #     alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
@@ -131,37 +99,12 @@
 
 
 
-
-    # - name: Suppress alarm for a specific resource
-    #   oracle.oci.oci_monitoring_alarm_suppression:
-    #     alarm_id: "{{ alarm_item }}"
-    #     alarm_suppression_target:
-    #       target_type: "ALARM"
-    #       alarm_id: "{{ alarm_item }}"
-    #     display_name: "Suppression for {{ hostvars[selected_host].display_name }}"
-    #     # dimensions:
-    #     #   resourceId: "{{ hostvars[selected_host].id }}"
-    #     dimensions: 
-    #       resourceDisplayName: "{{ alarm_item.dimensions.resourceDisplayName | default('') }}"
-    #     time_suppress_from: "{{ start_time_main }}"
-    #     time_suppress_until: "{{ end_time_main }}"
-    #   with_items: 
-    #     - "{{ alarm_ids }}"  
-    #   loop_control:
-    #     loop_var: alarm_item
-    #   vars:
-    #     selected_host: "{{ groups[target][0] | default('') }}"  # Pick first host from the group
-    #   # when: target in groups and selected_host in hostvars
-
-
-
     - name: Suppress alarm for a specific resource
       oracle.oci.oci_monitoring_alarm_suppression:
         alarm_id: "{{ alarm_item }}"
         alarm_suppression_target:
           target_type: "ALARM"
           alarm_id: "{{ alarm_item }}"
-        # display_name: "Suppression for {{ hostvars[selected_host].display_name }}"
         display_name: "Suppression for {{ alarm_dict[alarm_item] | default('Unknown') }}"
         dimensions: 
           resourceDisplayName: "{{ alarm_dict[alarm_item] | default('') }}"
@@ -171,20 +114,7 @@
       loop_control:
         loop_var: alarm_item
       vars:
-        selected_host: "{{ groups[target][0] | default('') }}"  # Pick first host from the group
+        selected_host: "{{ groups[target][0] | default('') }}"  
       when:
         - alarm_dict[alarm_item] is defined
         - alarm_dict[alarm_item] | length > 0
-
-
-
-        
- 
-
-      # with_items: "{{ alarm_ids }}"
-      # loop_control:
-      #   loop_var: alarm_item
-    #   when: add_suppression
-    # - name: Check version of community.general
-    #   ansible.builtin.debug:
-    #     msg: "oracle.oci version {{ lookup('community.general.collection_version', 'oracle.oci') }}"
