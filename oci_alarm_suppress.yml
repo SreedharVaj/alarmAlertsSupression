@@ -24,17 +24,83 @@
     - debug:
         msg: instance name "{{ instance_name }}"
 
-    - name: Extract Alarm IDs
+    # - name: Extract Alarm IDs
+    #   set_fact:
+    #     alarm_ids: "{{ alarm_ids + [result_item.id] }}"
+    #   loop: "{{ alarm_results }}"
+    #   when: alarm_results | length > 0 and (("resourceDisplayName = \"" + instance_name + "\"") in result_item.query or instance_id in result_item.query)
+    #   loop_control:
+    #     loop_var: result_item
+
+
+    # - name: Debug alarm_ids
+    #   debug:
+    #     var: alarm_ids
+
+###
+    - name: Identify alarms with dimensions
       set_fact:
-        alarm_ids: "{{ alarm_ids + [result_item.id] }}"
+        alarms_with_dimensions: "{{ alarms_with_dimensions + [result_item.id] }}"
       loop: "{{ alarm_results }}"
-      when: alarm_results | length > 0 and (("resourceDisplayName = \"" + instance_name + "\"") in result_item.query or instance_id in result_item.query)
+      when: 
+        - alarm_results | length > 0
+        - ('"resourceDisplayName' in result_item.query) or ('instance_id' in result_item.query)
       loop_control:
         loop_var: result_item
 
-    - name: Debug alarm_ids
+
+    - name: Identify alarms without dimensions
+      set_fact:
+        alarms_without_dimensions: "{{ alarms_without_dimensions + [result_item.id] }}"
+      loop: "{{ alarm_results }}"
+      when: 
+        - alarm_results | length > 0
+        - ('"resourceDisplayName' not in result_item.query) and ('instance_id' not in result_item.query)
+      loop_control:
+        loop_var: result_item
+
+    - name: Debug Alarms with Dimensions
       debug:
-        var: alarm_ids
+        var: alarms_with_dimensions
+
+    - name: Debug Alarms without Dimensions
+      debug:
+        var: alarms_without_dimensions
+
+    - name: Suppress alarms WITH dimensions
+      oracle.oci.oci_monitoring_alarm_suppression:
+        alarm_id: "{{ alarm_item }}"
+        alarm_suppression_target:
+          target_type: "ALARM"
+          alarm_id: "{{ alarm_item }}"
+        display_name: "Suppression for {{ instance_name }}"
+        dimensions:
+          resourceDisplayName: "{{ instance_name }}"
+        time_suppress_from: "{{ start_time_main }}"
+        time_suppress_until: "{{ end_time_main }}"
+      with_items: "{{ alarms_with_dimensions }}"
+      loop_control:
+        loop_var: alarm_item
+      when: alarms_with_dimensions | length > 0
+
+    - name: Suppress alarms WITHOUT dimensions
+      oracle.oci.oci_monitoring_alarm_suppression:
+        alarm_id: "{{ alarm_item }}"
+        alarm_suppression_target:
+          target_type: "ALARM"
+          alarm_id: "{{ alarm_item }}"
+        display_name: "Global Suppression"
+        time_suppress_from: "{{ start_time_main }}"
+        time_suppress_until: "{{ end_time_main }}"
+      with_items: "{{ alarms_without_dimensions }}"
+      loop_control:
+        loop_var: alarm_item
+      when: alarms_without_dimensions | length > 0
+
+
+###
+
+
 
 
     - name: Build dictionary of alarms with resourceDisplayName

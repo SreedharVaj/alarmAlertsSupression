@@ -83,38 +83,25 @@
         - fail:
             msg: "{{ ansible_failed_task }} {{ ansible_failed_result }}"
 
+
+
+
     # - name: Suppress alarm for a specific resource
     #   oracle.oci.oci_monitoring_alarm_suppression:
-    #     alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
+    #     alarm_id: "{{ alarm_item }}"
     #     alarm_suppression_target:
     #       target_type: "ALARM"
-    #       alarm_id: "ocid1.alarm.oc1.iad.aaaaaaaa3mcvlki47umb7kc4pjjuy5iogp4cqjjxhnog3t75ak3joy4dovwa"
-    #     display_name: "Example Suppression222"
-    #     dimensions:
-    #       resourceId: "ocid1.instance.oc1.iad.anuwcljt6rfcedyctsspgu4ahmsd2sfrn3vdmvttrx635sfjlyjst4fsez3q"
+    #       alarm_id: "{{ alarm_item }}"
+    #     display_name: "Suppression for {{ alarm_dict[alarm_item] | default('Unknown') }}"
+    #     dimensions: 
+    #       resourceDisplayName: "{{ alarm_dict[alarm_item] | default('') }}"
     #     time_suppress_from: "{{ start_time_main }}"
     #     time_suppress_until: "{{ end_time_main }}"
-
-
-
-
-
-    - name: Suppress alarm for a specific resource
-      oracle.oci.oci_monitoring_alarm_suppression:
-        alarm_id: "{{ alarm_item }}"
-        alarm_suppression_target:
-          target_type: "ALARM"
-          alarm_id: "{{ alarm_item }}"
-        display_name: "Suppression for {{ alarm_dict[alarm_item] | default('Unknown') }}"
-        dimensions: 
-          resourceDisplayName: "{{ alarm_dict[alarm_item] | default('') }}"
-        time_suppress_from: "{{ start_time_main }}"
-        time_suppress_until: "{{ end_time_main }}"
-      with_items: "{{ alarm_ids }}"
-      loop_control:
-        loop_var: alarm_item
-      vars:
-        selected_host: "{{ groups[target][0] | default('') }}"  
-      when:
-        - alarm_dict[alarm_item] is defined
-        - alarm_dict[alarm_item] | length > 0
+    #   with_items: "{{ alarm_ids }}"
+    #   loop_control:
+    #     loop_var: alarm_item
+    #   vars:
+    #     selected_host: "{{ groups[target][0] | default('') }}"  
+    #   when:
+    #     - alarm_dict[alarm_item] is defined
+    #     - alarm_dict[alarm_item] | length > 0
