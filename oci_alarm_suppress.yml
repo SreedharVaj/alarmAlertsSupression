@@ -38,6 +38,13 @@
     #     var: alarm_ids
 
 ###
+
+    - name: Initialize alarm lists
+      set_fact:
+        alarms_with_dimensions: []
+        alarms_without_dimensions: []
+
+
     - name: Identify alarms with dimensions
       set_fact:
         alarms_with_dimensions: "{{ alarms_with_dimensions + [result_item.id] }}"
